@@ -1,0 +1,28 @@
+Staking.sol
+
+onlyEOA line 27
+It is not used. 
+
+addValidator line 72 (video)
+New validators can be added without staking any ether. _addressToIsValidator and _addressToStakedAmount are not being updated.
+
+_stake line 79
+Should be _addressToStakedAmount[msg.sender] += msg.value;
+
+_stake line 82
+Should be !_addressToIsValidator[msg.sender] within the if statement.
+
+_unstake line 94
+A smart contract can execute unstake(). Should be set to onlyEOA().
+
+_unstake line 97
+The require statement could have a more explanatory message. e.g:
+"Number of validators can't be less than MinimumRequiredNumValidators".
+
+_unstake line 106
+Doesnt follow check-effect-interaction pattern. Vulnerable to reentrancy attack.
+
+_deleteFromValidators line 128
+Address to validator should be set to false.
+
+

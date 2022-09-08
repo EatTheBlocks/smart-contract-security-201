@@ -1,0 +1,5 @@
+The objective of the Staking.sol contract is to simulate the behavior of a consensus system such as proof of stake, where there are nodes that must stake a cryptocurrency to become validators.
+The Staking.sol contract has stake() as its main function. Depending on the amount of ether paid, the message sender may or may not become a validator. 
+In this implementation, we require a minimum of 1 ether to be staked.
+As a deployer/owner we can add validators.
+There is also an unstake() function that allows someone who deposited ether to receive their cryptocurrencies back.

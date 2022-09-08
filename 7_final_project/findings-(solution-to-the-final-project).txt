@@ -1,0 +1,58 @@
+ResultOracle.sol
+
+L1 - Pragma solidity should be pinned to a specific version.
+
+L4 - Imports the hardhat/console.sol module, which is not used and should not be in production code.
+
+L32 - Condition should be _roundResult != type(uint32).max
+
+L40 - getAmountOfJudge could be set external.
+
+L48 - The error message is not descriptive. A better message would be: "Address is already a judge."
+
+L89 - Should be resultsAmounts >= 2 
+
+
+Pool.sol
+
+L11 - It would be usefull to clarify that the interface INFTCollection is intended to use the CPERC1155 contract.
+
+L43, L44 - NFT_PRICE y NFT_WHITELISTED_PRICE should be constants to spend less gas.
+
+L46 - thereIsAWinner is never updated throughout the contract.
+
+L74 - Incorrect error message in require in amountToClaim(): "Owner does not own this nft." (should be "Sender does not own this nft")
+
+L103 - Possible reentrancy bug. Recommendation: Follow Check, Effects, Interactions pattern.
+
+L112 - Should be check if the phase is DEPOSITING or VOTING
+
+	require(
+        	    currentPhase == Phase.DEPOSITING || _currentPhase == Phase.VOTING,
+	            "We are not in the voting phase"
+        );
+
+L133 - claim() function has a incorrect require, should be require(amount != 0, "Nothing to claim.");
+
+L169 - Should ensure that selection and result have at least 8 digits.
+
+L169 - If statement in isWinnerOfRound should use bit arithmetic instead of transforming to string.
+
+L71, L185 - Between devTeamReceiveFunds() and claim(), 90% of the pool funds are given, whats happened with the other 10%?
+
+L151, L168 - i++ could be unchecked
+
+
+
+CPERC1155.sol
+
+
+L13 - tokenId should be set constant to save gas.
+
+L32 - For loop iterates over 65536 times. Possible self inflicted DoS. Review if the upper limit type(uint16).max for the accumulator i is correct.
+
+L45 - The random number generation procedure is insecure. The miners can manipulate the block.timestamp.
+
+
+
+
