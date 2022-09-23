@@ -1,0 +1,65 @@
+Line 9 - Gas Usage - Dead Code
+
+    Remove declaration of unused variable secondPrice.
+
+    uint8 private secondPrice = 1;
+
+
+Line 52 - Gas Usage - Unchecked balances
+
+    Consider adding the unchecked block for the balances update within the transfer() function. 
+    The previous require statement ensures no overflow can occur.
+
+    unchecked {
+        balances[msg.sender] = fromBalance - amount;
+    }
+
+Line 79 - Gas Usage - Unchecked balances
+
+    Consider adding the unchecked block for the balances update within the _burn() function. 
+    The previous require statement ensures no overflow can occur.
+
+    unchecked {
+        balances[account] = accountBalance - amount;
+    }
+
+Line 86 - Gas Usage - Saving function outputs in memory
+
+    Consider saving function outputs in memory and a nested if statement pattern to save gas in function defineRandomPrice().
+
+    function defineRandoPrice() external onlyOwner {
+        uint256 secondRandom = secondRandomNumber();
+        if (secondRandom > 0) {
+            uint256 firstRandom = firstRandomNumber(price);
+            if (firstRandom > 0) {
+                price = uint8(firstRandom) + uint8(secondRandom);
+            }
+        } else {
+            price = 1;
+        }
+    }
+
+Lines 99, 101, 106 and 107 - Block attributes - Bad randomness
+
+    (Notice that the line numbers we are referring to differ from the ones mentioned in the video. This happened because we edited the code in the file we were analysing. When pointing out findings we refer to the lines in the original file provided.) 
+
+    Usage of block.timestamp together with blockhash is an unsafe source of randomness. 
+
+    Generate random numbers using an Oracle (e.g: Chainlinkg VRF) or a commitment scheme (e.g: RANDAO).
+
+Line 103 - Gas Usage - Uncheck accumulator in for loop
+
+    Since the i accumulator is a uint256 bounded above during iteration by 10000, there is no risk of overflow and its increment can be unchecked.
+
+    for (uint256 i; i < 10000;) {
+        ...
+
+        if (value > 10000) {
+            return value;
+        }
+        unchecked{ i++; }
+    } 
+
+
+
+
