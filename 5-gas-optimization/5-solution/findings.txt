@@ -14,6 +14,7 @@ Line 52 - Gas Usage - Unchecked balances
         balances[msg.sender] = fromBalance - amount;
     }
 
+
 Line 79 - Gas Usage - Unchecked balances
 
     Consider adding the unchecked block for the balances update within the _burn() function. 
@@ -22,6 +23,7 @@ Line 79 - Gas Usage - Unchecked balances
     unchecked {
         balances[account] = accountBalance - amount;
     }
+
 
 Line 86 - Gas Usage - Saving function outputs in memory
 
@@ -39,6 +41,7 @@ Line 86 - Gas Usage - Saving function outputs in memory
         }
     }
 
+
 Lines 99, 101, 106 and 107 - Block attributes - Bad randomness
 
     (Notice that the line numbers we are referring to differ from the ones mentioned in the video. This happened because we edited the code in the file we were analysing. When pointing out findings we refer to the lines in the original file provided.) 
@@ -46,6 +49,7 @@ Lines 99, 101, 106 and 107 - Block attributes - Bad randomness
     Usage of block.timestamp together with blockhash is an unsafe source of randomness. 
 
     Generate random numbers using an Oracle (e.g: Chainlinkg VRF) or a commitment scheme (e.g: RANDAO).
+
 
 Line 103 - Gas Usage - Uncheck accumulator in for loop
 
